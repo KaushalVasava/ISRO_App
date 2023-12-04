@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">JetPackCompose Basic</string>
+    <string name="name_"><b>Name:</b> %s</string>
+    <string name="type_"><b>Type:</b> %s</string>
+    <string name="application_"><b>Application:</b> %s</string>
+    <string name="status_"><b>Status:</b> %s</string>
+    <string name="date_"><b>Launch Date</b>: %s</string>
+    <string name="website_"><b>Website:</b> %s</string>
+    <string name="launch_vehicle_"><b>Launch Vehicle:</b> %s</string>
+    <string name="payload_"><b>Payload:</b> %s</string>
+</resources>
