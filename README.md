@@ -12,7 +12,8 @@ It is project to show case ISRO(INDIAN SPACE RESEARCH ORGANISATION) launches and
 
 # Video
 
-https://github.com/KaushalVasava/ISRO_App/assets/49050597/18150898-5733-4c7f-96eb-73c327666b03
+https://github.com/KaushalVasava/ISRO_App/assets/49050597/34d158a2-db53-4310-81d2-01a5925ad71e
+
 
 # Author
 Kaushal Vasava
