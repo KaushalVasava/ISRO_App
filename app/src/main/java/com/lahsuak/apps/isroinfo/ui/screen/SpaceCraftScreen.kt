@@ -2,6 +2,7 @@ package com.lahsuak.apps.isroinfo.ui.screen
 
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -20,16 +21,35 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.lahsuak.apps.isroinfo.R
+import com.lahsuak.apps.isroinfo.model.BaseState
 import com.lahsuak.apps.isroinfo.model.SpaceCraft
+import com.lahsuak.apps.isroinfo.ui.components.CenterProgressBar
+import com.lahsuak.apps.isroinfo.ui.components.FullScreenCenterButton
 import com.lahsuak.apps.isroinfo.ui.components.TextUtil
 import com.lahsuak.apps.isroinfo.ui.viewmodel.HomeViewModel
 
 @Composable
 fun SpaceCraftScreen(viewModel: HomeViewModel) {
-    val spaceCrafts by viewModel.spaceCrafts.collectAsState()
-    LazyColumn {
-        items(spaceCrafts) {
-            SpaceCraftItem(it)
+    val spaceCraftState by viewModel.spaceCrafts.collectAsState()
+
+    when (val state = spaceCraftState) {
+        is BaseState.Failed -> {
+            Toast.makeText(LocalContext.current, "Something went wrong!", Toast.LENGTH_SHORT).show()
+            FullScreenCenterButton(text = "Retry") {
+                viewModel.getSpaceCrafts()
+            }
+        }
+
+        BaseState.Loading -> {
+            CenterProgressBar()
+        }
+
+        is BaseState.Success -> {
+            LazyColumn {
+                items(state.data) {
+                    SpaceCraftItem(it)
+                }
+            }
         }
     }
 }

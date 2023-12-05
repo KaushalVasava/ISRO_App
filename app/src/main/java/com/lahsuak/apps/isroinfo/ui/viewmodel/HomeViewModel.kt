@@ -3,6 +3,8 @@ package com.lahsuak.apps.isroinfo.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lahsuak.apps.isroinfo.api.ApiClient
+import com.lahsuak.apps.isroinfo.model.ApiFailure
+import com.lahsuak.apps.isroinfo.model.BaseState
 import com.lahsuak.apps.isroinfo.model.Launch
 import com.lahsuak.apps.isroinfo.model.SpaceCraft
 import com.lahsuak.apps.isroinfo.repo.IsroRepo
@@ -16,11 +18,13 @@ class HomeViewModel : ViewModel() {
         IsroRepo(ApiClient.apiInstance)
     }
 
-    private val _launches = MutableStateFlow<List<Launch>>(emptyList())
-    val launches: StateFlow<List<Launch>>
+    private val _launches =
+        MutableStateFlow<BaseState<List<Launch>, ApiFailure>>(BaseState.Loading)
+    val launches: StateFlow<BaseState<List<Launch>, ApiFailure>>
         get() = _launches.asStateFlow()
-    private val _spaceCrafts = MutableStateFlow<List<SpaceCraft>>(emptyList())
-    val spaceCrafts: StateFlow<List<SpaceCraft>>
+    private val _spaceCrafts =
+        MutableStateFlow<BaseState<List<SpaceCraft>, ApiFailure>>(BaseState.Loading)
+    val spaceCrafts: StateFlow<BaseState<List<SpaceCraft>, ApiFailure>>
         get() = _spaceCrafts.asStateFlow()
 
     init {
@@ -28,23 +32,25 @@ class HomeViewModel : ViewModel() {
         getSpaceCrafts()
     }
 
-    private fun getLaunches() {
+    fun getLaunches() {
         viewModelScope.launch {
             try {
-                _launches.value = repo.getLaunches()
+                _launches.value = BaseState.Success(repo.getLaunches())
             } catch (e: Exception) {
                 e.stackTrace
-                _launches.value = emptyList()
+                _launches.value =
+                    BaseState.Failed(ApiFailure.Unknown(e.message ?: "Something went wrong!"))
             }
         }
     }
 
-    private fun getSpaceCrafts() {
+    fun getSpaceCrafts() {
         viewModelScope.launch {
             try {
-                _spaceCrafts.value = repo.getSpaceCraft()
+                _spaceCrafts.value = BaseState.Success(repo.getSpaceCraft())
             } catch (e: Exception) {
-                _spaceCrafts.value = emptyList()
+                _spaceCrafts.value =
+                    BaseState.Failed(ApiFailure.Unknown(e.message ?: "Something went wrong!"))
             }
         }
     }
