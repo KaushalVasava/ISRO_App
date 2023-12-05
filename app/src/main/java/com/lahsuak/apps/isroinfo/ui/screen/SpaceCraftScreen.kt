@@ -63,7 +63,9 @@ fun SpaceCraftScreen(viewModel: HomeViewModel) {
 
         is BaseState.Success -> {
             LazyColumn {
-                items(state.data) {
+                items(state.data.sortedByDescending { it.launchDate }, key = {
+                    it._id
+                }) {
                     SpaceCraftItem(it)
                 }
             }

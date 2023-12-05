@@ -60,7 +60,10 @@ fun HomeScreen(viewModel: HomeViewModel) {
 
         is BaseState.Success -> {
             LazyColumn {
-                items(state.data) {
+                items(state.data.sortedByDescending { it.LaunchDate },
+                    key = {
+                        it.UUID
+                    }) {
                     LaunchItem(it)
                 }
             }
@@ -94,7 +97,8 @@ fun LaunchItem(launchItem: Launch) {
             Icon(Icons.Default.DateRange, null)
             Spacer(modifier = Modifier.width(4.dp))
             Text(
-                TextUtil.getBoldText(stringResource(id = R.string.date_, launchItem.LaunchDate)))
+                TextUtil.getBoldText(stringResource(id = R.string.date_, launchItem.LaunchDate))
+            )
         }
         Spacer(modifier = Modifier.height(4.dp))
         Text(TextUtil.getBoldText(stringResource(id = R.string.type_, launchItem.LaunchType)))
