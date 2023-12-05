@@ -8,4 +8,5 @@
     <string name="website_"><b>Website:</b> %s</string>
     <string name="launch_vehicle_"><b>Launch Vehicle:</b> %s</string>
     <string name="payload_"><b>Payload:</b> %s</string>
+    <string name="visit">Visit</string>
 </resources>
