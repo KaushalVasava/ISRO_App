@@ -7,7 +7,7 @@ enum class Screen {
 }
 
 sealed class NavigationItem(val route: String) {
-    object Splash : NavigationItem(Screen.SPLASH.name)
-    object Launches : NavigationItem(Screen.LAUNCHES.name)
-    object SpaceCrafts : NavigationItem(Screen.SPACECRAFTS.name)
+    data object Splash : NavigationItem(Screen.SPLASH.name)
+    data object Launches : NavigationItem(Screen.LAUNCHES.name)
+    data object SpaceCrafts : NavigationItem(Screen.SPACECRAFTS.name)
 }
